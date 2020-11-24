@@ -7,6 +7,7 @@ import com.example.loggingconsume.rabbitmq.mutiproductormuticonsumer.Mutiproduct
 import com.example.loggingconsume.rabbitmq.mutiproductormuticonsumer.MutiproductormuticonsumerSender2;
 import com.example.loggingconsume.rabbitmq.singleproductormuticonsumer.SingleproductormuticonsumerSender1;
 import com.example.loggingconsume.rabbitmq.tansferbean.UserSender;
+import com.example.loggingconsume.rabbitmq.tansferjsonbean.JsonSender;
 import com.example.loggingconsume.rabbitmq.exchangetopic.TopicSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,9 @@ public class RabbitmqController {
 
     @Autowired
     CallBackSender callBackSender;
+    
+    @Autowired
+    JsonSender jsonSender;
 
     /**
      * 单生产者-单消费者
@@ -102,6 +106,11 @@ public class RabbitmqController {
     @GetMapping("/callback")
     public void callbak() {
         callBackSender.send();
+    }
+    
+    @GetMapping("/json")
+    public void jsonpost() {
+    	jsonSender.send();
     }
 
 }

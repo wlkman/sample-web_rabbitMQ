@@ -25,6 +25,11 @@ public class LoggingConsumerApplication {
     public Queue helloQueue() {
         return new Queue("hello");
     }
+    
+    @Bean
+    public Queue jsonQueue() {
+        return new Queue("json");
+    }
 
     @Bean
     public Queue singleproductormuticonsumer() {
