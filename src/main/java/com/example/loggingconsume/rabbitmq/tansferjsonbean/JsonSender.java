@@ -24,8 +24,8 @@ public class JsonSender {
         //boolean
         object.put("boolean",true);
         //array
-        List<Integer> integers = Arrays.asList(1,2,3);
-        object.put("list",integers);
+//        List<Integer> integers = Arrays.asList(1,2,3);
+//        object.put("list",integers);
         //null
         object.put("null",null);
 //    ​

@@ -1,6 +1,6 @@
 package com.example.loggingconsume.rabbitmq;
 
-import com.example.loggingconsume.rabbitmq.callback.CallBackSender;
+//import com.example.loggingconsume.rabbitmq.callback.CallBackSender;
 import com.example.loggingconsume.rabbitmq.demohello.HelloSender1;
 import com.example.loggingconsume.rabbitmq.exchangebroadcast.FanoutSender;
 import com.example.loggingconsume.rabbitmq.mutiproductormuticonsumer.MutiproductormuticonsumerSender1;
@@ -39,8 +39,8 @@ public class RabbitmqController {
     @Autowired
     FanoutSender fanoutSender;
 
-    @Autowired
-    CallBackSender callBackSender;
+//    @Autowired
+//    CallBackSender callBackSender;
     
     @Autowired
     JsonSender jsonSender;
@@ -103,10 +103,10 @@ public class RabbitmqController {
     }
 
 
-    @GetMapping("/callback")
-    public void callbak() {
-        callBackSender.send();
-    }
+//    @GetMapping("/callback")
+//    public void callbak() {
+//        callBackSender.send();
+//    }
     
     @GetMapping("/json")
     public void jsonpost() {

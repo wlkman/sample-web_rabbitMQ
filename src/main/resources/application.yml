@@ -1,0 +1,16 @@
+spring:
+ application:
+  name: springboot-rabbitmq
+
+ rabbitmq:
+  host: 
+  port: 
+  username: 
+  password: '123'
+  virtual-host: test.history
+  ssl:
+   enabled: true
+
+
+server:
+ port: 8098
