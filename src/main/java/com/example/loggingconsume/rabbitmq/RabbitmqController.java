@@ -7,6 +7,7 @@ import com.example.loggingconsume.rabbitmq.mutiproductormuticonsumer.Mutiproduct
 import com.example.loggingconsume.rabbitmq.mutiproductormuticonsumer.MutiproductormuticonsumerSender2;
 import com.example.loggingconsume.rabbitmq.singleproductormuticonsumer.SingleproductormuticonsumerSender1;
 import com.example.loggingconsume.rabbitmq.tansferbean.UserSender;
+import com.example.loggingconsume.rabbitmq.tansferbean.UserSenderSSL;
 import com.example.loggingconsume.rabbitmq.tansferjsonbean.JsonSender;
 import com.example.loggingconsume.rabbitmq.exchangetopic.TopicSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class RabbitmqController {
 
     @Autowired
     FanoutSender fanoutSender;
+    
+    @Autowired
+    UserSenderSSL userSenderSSL;
 
 //    @Autowired
 //    CallBackSender callBackSender;
@@ -81,7 +85,8 @@ public class RabbitmqController {
      */
     @GetMapping("/userTest")
     public void userTest() {
-        userSender.send();
+//        userSender.send();
+        userSenderSSL.send();
     }
 
 

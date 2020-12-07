@@ -3,11 +3,11 @@ spring:
   name: springboot-rabbitmq
 
  rabbitmq:
-  host: 
-  port: 
-  username: 
-  password: '123'
-  virtual-host: test.history
+  host: host
+  port: 30159
+  username: chistory
+  password: '!QAZ123'
+  virtual-host: test.cs.history
   ssl:
    enabled: true
 

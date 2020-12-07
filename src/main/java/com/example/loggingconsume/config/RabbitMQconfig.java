@@ -1,61 +1,69 @@
 package com.example.loggingconsume.config;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.AbstractConnectionFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
-import com.rabbitmq.client.ConnectionFactory;
+import java.io.IOException;
 
 @Configuration
 public class RabbitMQconfig {
 	
-//	touny.rabbitmq.host=6e4a1d1c-2de3-470d-b40c-233ac59d640c.bn2a2vgd01r3l0hfmvc0.databases.appdomain.cloud
-//			touny.rabbitmq.port=30159
-//			touny.rabbitmq.username=chistory
-//			touny.rabbitmq.password=!QAZ123
-//			touny.rabbitmq.virtual-host=cpds.cs.history
-	
-//	@Value("${touny.rabbitmq.host}")
-//	private String host;
-//	
-//	@Value("${touny.rabbitmq.port}")
-//	private int port;
-//	
-//	@Value("${touny.rabbitmq.username}")
-//	private String username;
-//	
-//	@Value("${touny.rabbitmq.password}")
-//	private String password;
-//	
-//	@Value("${touny.rabbitmq.virtual-host}")
-//	private String virtualhost;
-	
-//	@Bean
-//	public ConnectionFactory connectionFactory() throws Exception {
-//		ConnectionFactory factory = new ConnectionFactory();
-////        factory.setHost(host);
-////        factory.setPort(port);
-////        factory.setPassword(password);
-////        factory.setUsername(username);
-////        factory.setVirtualHost(virtualhost);
-////        factory.setHost("localhost");
-////        factory.setPort(5672);
-////        factory.setPassword("admin");
-////        factory.setUsername("admin");
-////        factory.setVirtualHost("testVirtualHost");
-//		factory.setHost("6e4a1d1c-2de3-470d-b40c-233ac59d640c.bn2a2vgd01r3l0hfmvc0.databases.appdomain.cloud");
-//        factory.setPort(30159);
-//        factory.setPassword("!QAZ123");
-//        factory.setUsername("chistory");
-//        factory.setVirtualHost("cpds.cs.history");
-//        
-//
-//        factory.useSslProtocol();
-//        return factory;
-//		
-//	}
+		@Bean(name = "firstConnectionFactory")
+	    @Primary
+	    public ConnectionFactory firstConnectionFactory(
+	            @Value("${spring.rabbitmq.first.host}") String host,
+	            @Value("${spring.rabbitmq.first.port}") int port,
+	            @Value("${spring.rabbitmq.first.username}") String username,
+	            @Value("${spring.rabbitmq.first.password}") String password,
+	            @Value("${spring.rabbitmq.first.virtual-host}") String virtualHost
+	    ) {
+			CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+	        connectionFactory.setHost(host);
+	        connectionFactory.setPort(port);
+	        connectionFactory.setUsername(username);
+	        connectionFactory.setPassword(password);
+	        connectionFactory.setVirtualHost(virtualHost);
+	        return connectionFactory;
+	    }
+
+	    @Bean(name = "secondConnectionFactory")
+	    public ConnectionFactory secondConnectionFactory(
+	            @Value("${spring.rabbitmq.second.uri}") String uri,
+	            @Value("${spring.rabbitmq.second.virtual-host}") String virtualHost
+	    ) {
+	        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+	        connectionFactory.setUri(uri);
+	        connectionFactory.setVirtualHost(virtualHost);
+	        return connectionFactory;
+	    }
+
+	    @Bean(name = "firstRabbitTemplate")
+	    @Primary
+	    public RabbitTemplate firstRabbitTemplate(
+	            @Qualifier("firstConnectionFactory") ConnectionFactory connectionFactory
+	    ) {
+	        RabbitTemplate firstRabbitTemplate = new RabbitTemplate(connectionFactory);
+	        return firstRabbitTemplate;
+	    }
+
+	    @Bean(name = "secondRabbitTemplate")
+	    public RabbitTemplate secondRabbitTemplate(
+	            @Qualifier("secondConnectionFactory") ConnectionFactory connectionFactory
+	    ) {
+	        RabbitTemplate secondRabbitTemplate = new RabbitTemplate(connectionFactory);
+	        return secondRabbitTemplate;
+	    }
+
+	   
 
 }
